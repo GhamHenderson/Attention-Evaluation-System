@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AttentionAI.iml" filepath="$PROJECT_DIR$/.idea/AttentionAI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/KerasLoadModel.iml" filepath="$PROJECT_DIR$/.idea/KerasLoadModel.iml" />
     </modules>
   </component>
 </project>
