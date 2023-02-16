@@ -35,14 +35,15 @@ def faceTracking():
                 # 2 lines below were taken from a helpful tutorial on OpenCV to capture eye rectangle image.
                 crop_img = roi_gray[ey: ey + eh, ex: ex + ew]
                 cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
-
+                
                 # Save Image
-                s1 = 'img/img{}.jpg'.format(count)
-                count = count + 1
-                cv2.imwrite(s1, crop_img)
-                time.sleep(1)
-                print(str(s1) + "saved")
+                # s1 = 'img/img{}.jpg'.format(count)
+                # count = count + 1
+                # cv2.imwrite(s1, crop_img)
+                # time.sleep(1)
+                # print(str(s1) + "saved")
 
+        
         # Close program on spacebar.
         cv2.imshow('img', img)
         if keyboard.is_pressed("space"):

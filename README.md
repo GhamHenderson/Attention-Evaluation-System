@@ -17,6 +17,7 @@ eye gaze
 https://www.kaggle.com/datasets/4quant/eye-gaze
 
 tensorflow posenet.
+https://www.tensorflow.org/lite/examples/pose_estimation/overview
 
 eye/open closed dataset used to train model
 https://www.kaggle.com/code/akshitmadan/eyes-closed-open-using-cnn/data

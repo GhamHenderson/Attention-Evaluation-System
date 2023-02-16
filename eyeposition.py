@@ -20,30 +20,18 @@ def prepareImage(filepath):
     image_array = keras.preprocessing.image.img_to_array(image_after_processing)
     # create object to be passed into model
     batchimage = np.expand_dims(image_array, axis=0)
-    
     return batchimage
 
-
-# categories for a nice printout of predict.
-categories = ["Open", "Closed"]
-
-# load model with keras.load
-model = keras.models.load_model('eyes.h5')
-
-# Images from the dataset used to train model
-OPEN_EYE_FILE = 'input/test/Open_Eyes/s0012_04796_0_0_1_0_0_03.png'
-CLOSED_EYE_FILE = 'input/test/Closed_Eyes/s0016_00015_1_0_0_0_1_01.png'
-
-# My Images from webcam
-MY_EYE_OPEN_FILE = 'img/image1.jpg'
-MY_EYE_CLOSED_FILE = 'img/image216.jpg'
-
-# call prepare image function to prep images for model.
-preparedImage = prepareImage(MY_EYE_OPEN_FILE)
-
-# call model.predict to use model prediction
-output = model.predict(preparedImage)
-
-# print output
-print("The Eye in This Image is " + str(categories[int(output[0][0])]) + '\n')
-print(int(output[0][0]))
+def predict(image):
+    # categories for a nice printout of predict.
+    categories = ["Open", "Closed"]
+    # load model with keras.load
+    model = keras.models.load_model('eyes.h5')
+    # call prepare image function to prep images for model.
+    preparedImage = prepareImage(image)
+    # call model.predict to use model prediction
+    output = model.predict(preparedImage)
+    # print output
+    print("The Eye in This Image is " + str(categories[int(output[0][0])]) + '\n')
+    print(output)
+    print(float(output[0][0]))
