@@ -12,6 +12,7 @@ import numpy as np
 # Image Height and Width for Model
 width, height = 86, 86
 
+
 # Preparing Image for Use in Model as image need to be preprocessed before use.
 def prepareImage(filepath):
     # use keras to process the image
@@ -22,11 +23,12 @@ def prepareImage(filepath):
     batchimage = np.expand_dims(image_array, axis=0)
     return batchimage
 
+
 def predict(image):
     # categories for a nice printout of predict.
     categories = ["Open", "Closed"]
     # load model with keras.load
-    model = keras.models.load_model('eyes.h5')
+    model = keras.models.load_model('../model/eyes.h5')
     # call prepare image function to prep images for model.
     preparedImage = prepareImage(image)
     # call model.predict to use model prediction
