@@ -1,3 +1,4 @@
+import asyncio
 import time
 
 import cv2
@@ -10,21 +11,21 @@ import time
 
 def blink_counter(cap):
     detector = FaceMeshDetector(maxFaces=1)
-    plotY = LivePlot(640, 360, [20, 50])
-    Facial_Landmark_List = [22, 23, 24, 26, 110, 157, 158, 159, 160, 161, 130, 243]
+    plot_y = LivePlot(640, 360, [20, 50])
+    facial_landmark_list = [22, 23, 24, 26, 110, 157, 158, 159, 160, 161, 130, 243]
     ratioList = []
-    blinkCounter = 0
+    blink_counter = 0
     threshold = 30
-    ratioAverage = 0
+    ratio_average = 0
     counter = 0
     minute_average = []
     while True:
 
         timer = datetime.now().second
-        print(timer)
+
         if timer == 59:
-            minute_average.append(blinkCounter)
-            blinkCounter = 0
+            minute_average.append(blink_counter)
+            blink_counter = 0
             time.sleep(1)
 
             print(minute_average)
@@ -35,12 +36,12 @@ def blink_counter(cap):
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
         success, img = cap.read()
-        img, faces = detector.findFaceMesh(img, draw=False)
+        img, faces = detector.findFaceMesh(img, draw=True)
 
         # If faces are detected, find the first face and draw circles around the eyes
         if faces:
             face = faces[0]
-            for i in Facial_Landmark_List:
+            for i in facial_landmark_list:
                 cv2.circle(img, face[i], 5, (255, 0, 255), cv2.FILLED)
 
             # Calculate the eye aspect ratio and store it in a variable
@@ -62,14 +63,14 @@ def blink_counter(cap):
             ratioList.append(ratio)
             if len(ratioList) > 5:
                 ratioList.pop(0)
-                ratioAverage = sum(ratioList) / len(ratioList)
+                ratio_average = sum(ratioList) / len(ratioList)
 
             # Update the plot with the average eye aspect ratio
-            plot_Image = plotY.update(ratioAverage)
+            plot_image = plot_y.update(ratio_average)
 
             # If the eye aspect ratio falls below a threshold, increment the blink counter
-            if ratioAverage < 35 and counter == 0:
-                blinkCounter += 1
+            if ratio_average < 35 and counter == 0:
+                blink_counter += 1
                 counter = 1
             if counter != 0:
                 counter += 1
@@ -77,12 +78,12 @@ def blink_counter(cap):
                     counter = 0
 
             # Display the blink counter on the image
-            cvzone.putTextRect(img, "Blink Count : " + str(blinkCounter), (50, 100))
+            cvzone.putTextRect(img, "Blink Count : " + str(blink_counter), (50, 100))
 
         # Resize the image for display and show it
         img = cv2.resize(img, (640, 360))
         cv2.imshow("Image", img)
-        cv2.imshow("ImagePlot", plot_Image)
+        cv2.imshow("ImagePlot", plot_image)
 
         # Wait for a short period and check if the user has pressed 'q' to quit
         if cv2.waitKey(25) & 0xFF == ord('q'):

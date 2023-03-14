@@ -19,10 +19,10 @@
 2023-03-14 14:34:49.852352
 [
    { Minute:0, Blink Rate: 14}, 
-   { Minute:1, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 19},
    { Minute:2, Blink Rate: 15}, 
    { Minute:3, Blink Rate: 13}, 
-   { Minute:4, Blink Rate: 14}, 
+   { Minute:4, Blink Rate: 19},
 ]
 
 2023-03-14 14:37:30.781133
