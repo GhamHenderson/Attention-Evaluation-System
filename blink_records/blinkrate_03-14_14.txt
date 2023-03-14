@@ -1,0 +1,61 @@
+2023-03-14 14:34:11.272941
+[
+    { Minute:0, Blink Rate: 14},
+    { Minute:1, Blink Rate: 14},
+    { Minute:2, Blink Rate: 15},
+    { Minute:3, Blink Rate: 13},
+    { Minute:4, Blink Rate: 14},
+    ]
+
+2023-03-14 14:34:34.994917
+[
+   { Minute:0, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 14}, 
+   { Minute:2, Blink Rate: 15}, 
+   { Minute:3, Blink Rate: 13}, 
+   { Minute:4, Blink Rate: 14}, 
+]
+
+2023-03-14 14:34:49.852352
+[
+   { Minute:0, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 14}, 
+   { Minute:2, Blink Rate: 15}, 
+   { Minute:3, Blink Rate: 13}, 
+   { Minute:4, Blink Rate: 14}, 
+]
+
+2023-03-14 14:37:30.781133
+[
+   { Minute:0, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 14}, 
+   { Minute:2, Blink Rate: 15}, 
+   { Minute:3, Blink Rate: 13}, 
+   { Minute:4, Blink Rate: 14}] 
+
+
+2023-03-14 14:37:55.975051
+[   { Minute:0, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 14}, 
+   { Minute:2, Blink Rate: 15}, 
+   { Minute:3, Blink Rate: 13}, 
+   { Minute:4, Blink Rate: 14}] 
+
+
+2023-03-14 14:38:23.859674
+[
+   { Minute:0, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 14}, 
+   { Minute:2, Blink Rate: 15}, 
+   { Minute:3, Blink Rate: 13}, 
+   { Minute:4, Blink Rate: 14}] 
+
+
+2023-03-14 14:38:37.025781
+[
+   { Minute:0, Blink Rate: 14}, 
+   { Minute:1, Blink Rate: 14}, 
+   { Minute:2, Blink Rate: 15}, 
+   { Minute:3, Blink Rate: 13}, 
+   { Minute:4, Blink Rate: 14}
+] 

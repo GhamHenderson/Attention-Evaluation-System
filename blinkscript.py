@@ -1,11 +1,14 @@
+import time
+
 import cv2
 import cvzone
 from cvzone.FaceMeshModule import FaceMeshDetector
 from cvzone.PlotModule import LivePlot
+from datetime import datetime, timedelta
+import time
 
 
 def blink_counter(cap):
-
     detector = FaceMeshDetector(maxFaces=1)
     plotY = LivePlot(640, 360, [20, 50])
     Facial_Landmark_List = [22, 23, 24, 26, 110, 157, 158, 159, 160, 161, 130, 243]
@@ -14,8 +17,18 @@ def blink_counter(cap):
     threshold = 30
     ratioAverage = 0
     counter = 0
-
+    minute_average = []
     while True:
+
+        timer = datetime.now().second
+        print(timer)
+        if timer == 59:
+            minute_average.append(blinkCounter)
+            blinkCounter = 0
+            time.sleep(1)
+
+            print(minute_average)
+
         # If the condition is true, it means that the video has reached its end, and the code is resetting the frame
         # position to 0
         if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
@@ -73,5 +86,19 @@ def blink_counter(cap):
 
         # Wait for a short period and check if the user has pressed 'q' to quit
         if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
+            # Get current date and time
+            now = datetime.now()
 
+            # Create filename using current date and time
+            filename = now.strftime("blink_records/blinkrate_%m-%d_%H.txt")
+
+            # Use filename to create new file
+            with open(filename, 'a') as f:
+                f.write("\n\n{}\n[\n".format(now))
+                for i, item in enumerate(minute_average):
+                    if i == len(minute_average) - 1:
+                        f.write("   {{ Minute:{}, Blink Rate: {}}}\n] \n".format(i, item))
+                    else:
+                        f.write("   {{ Minute:{}, Blink Rate: {}}}, \n".format(i, item))
+            f.close()
+            break
