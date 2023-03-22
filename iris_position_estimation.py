@@ -33,27 +33,59 @@ def iris_position(input_stream):
 
                 # if face landmarks are detected
                 if after_processing.multi_face_landmarks:
-
                     # extract the mesh points from the detected face landmarks and convert them to pixel coordinates
                     facial_landmark_mesh_points = np.array(
                         [np.multiply([p.x, p.y], [img_w, img_h]).astype(int) for p in
                          after_processing.multi_face_landmarks[0].landmark])
 
                     # compute the minimum enclosing circle of the left and right iris landmarks
-                    (left_x, left_y), left_radius = cv.minEnclosingCircle(facial_landmark_mesh_points[left_iris_landmarks])
+                    (left_x, left_y), left_radius = cv.minEnclosingCircle(
+                        facial_landmark_mesh_points[left_iris_landmarks])
                     (right_x, right_y), right_radius = cv.minEnclosingCircle(
                         facial_landmark_mesh_points[right_iris_landmarks])
 
                     # convert the circle centers to integer coordinates
-                    center_left = np.array([left_x, left_y], dtype=np.int32)
-                    center_right = np.array([right_x, right_y], dtype=np.int32)
+                    center_right_iris = np.array([left_x, left_y], dtype=np.int32)
+                    center_left_iris = np.array([right_x, right_y], dtype=np.int32)
+
+                    # Calculate the eye aspect ratio and store it in a variable
+                    left_upper_eye = facial_landmark_mesh_points[159]
+                    left_lower_eye = facial_landmark_mesh_points[23]
+                    left_eye_left_side = facial_landmark_mesh_points[243]
+                    left_eye_right_side = facial_landmark_mesh_points[130]
+
+                    # Calculate the eye aspect ratio and store it in a variable
+                    right_upper_eye = facial_landmark_mesh_points[386]
+                    right_lower_eye = facial_landmark_mesh_points[374]
+                    right_eye_left_side = facial_landmark_mesh_points[398]
+                    right_eye_right_side = facial_landmark_mesh_points[359]
 
                     # draw a circle around the left and right iris landmarks on the original frame
-                    cv.circle(frame, center_left, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
-                    cv.circle(frame, center_right, int(right_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
+                    cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
+                    cv.circle(frame, center_left_iris, int(right_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
+
+                    # draw lines for left eye
+                    cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_left_iris, left_upper_eye, (0, 200, 0), 3)
+                    cv.line(frame, center_left_iris, left_lower_eye, (0, 200, 0), 3)
+
+                    # Draw Lines for right eye
+                    cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
+                    cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
 
                 cv.imshow('img', frame)
-                key = cv.waitKey(1)
+
                 if cv.waitKey(25) & 0xFF == ord('q'):
                     break
         input_stream.release()

@@ -7,6 +7,24 @@ from datetime import datetime, timedelta
 import time
 
 
+def save_data_to_textfile(minute_average):
+    # Get current date and time
+    now = datetime.now()
+
+    # Create filename using current date and time
+    filename = now.strftime("blink_records/blinkrate_%m-%d_%H.txt")
+
+    # Use filename to create new file
+    with open(filename, 'w') as f:
+        f.write("\n\n{}\n[\n".format(now))
+        for i, item in enumerate(minute_average):
+            if i == len(minute_average) - 1:
+                f.write("   {{ Minute:{}, Blink Rate: {}}}\n] \n".format(i, item))
+            else:
+                f.write("   {{ Minute:{}, Blink Rate: {}}}, \n".format(i, item))
+    f.close()
+
+
 def blink_counter(cap):
     detector = FaceMeshDetector(maxFaces=1)
     plot_y = LivePlot(640, 360, [20, 50])
@@ -16,7 +34,7 @@ def blink_counter(cap):
     threshold = 30
     ratio_average = 0
     counter = 0
-    minute_average = []
+    minute_average = [9, 8, 7]
     while True:
 
         timer = datetime.now().second
@@ -86,19 +104,7 @@ def blink_counter(cap):
 
         # Wait for a short period and check if the user has pressed 'q' to quit
         if cv2.waitKey(25) & 0xFF == ord('q'):
-            # Get current date and time
-            now = datetime.now()
+            # save_data_to_textfile(minute_average)
+            length = len(minute_average) - 1
 
-            # Create filename using current date and time
-            filename = now.strftime("blink_records/blinkrate_%m-%d_%H.txt")
-
-            # Use filename to create new file
-            with open(filename, 'a') as f:
-                f.write("\n\n{}\n[\n".format(now))
-                for i, item in enumerate(minute_average):
-                    if i == len(minute_average) - 1:
-                        f.write("   {{ Minute:{}, Blink Rate: {}}}\n] \n".format(i, item))
-                    else:
-                        f.write("   {{ Minute:{}, Blink Rate: {}}}, \n".format(i, item))
-            f.close()
-            break
+            return minute_average[length - 1]

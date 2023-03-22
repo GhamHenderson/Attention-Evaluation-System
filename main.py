@@ -10,8 +10,8 @@ def main():
     # Video with good lighting
     cap = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')
 
-    blinkscript.blink_counter(cap)
-#    iris_position_estimation.iris_position(cap)
+    # blinkscript.blink_counter(cap)
+    iris_position_estimation.iris_position(cap)
 
 
 if __name__ == '__main__':
