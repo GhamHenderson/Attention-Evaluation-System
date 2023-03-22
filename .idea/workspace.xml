@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85941126-63e2-43ee-a5c8-9b3901b83064" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blink_records/blinkrate_03-14_14.txt" beforeDir="false" afterPath="$PROJECT_DIR$/blink_records/blinkrate_03-14_14.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blinkscript.py" beforeDir="false" afterPath="$PROJECT_DIR$/blinkscript.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="85941126-63e2-43ee-a5c8-9b3901b83064" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +33,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Graha/Documents/GitHub/AttentionAI&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/graha/Documents/GitHub/AttentionAI&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -195,6 +190,8 @@
       <workItem from="1678716078980" duration="1337000" />
       <workItem from="1678734612413" duration="160000" />
       <workItem from="1678800570006" duration="6327000" />
+      <workItem from="1679500943442" duration="935000" />
+      <workItem from="1679501916370" duration="611000" />
     </task>
     <servers />
   </component>
@@ -213,9 +210,9 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1678812130401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1679502495893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AttentionAI$blinkcounter.coverage" NAME="blinkcounter Coverage Results" MODIFIED="1678711449675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation__1_.coverage" NAME="iris_position_estimation (1) Coverage Results" MODIFIED="1678716590256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position.coverage" NAME="iris_position_estimation Coverage Results" MODIFIED="1678715255608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AttentionAI$blinkcounter.coverage" NAME="blinkcounter Coverage Results" MODIFIED="1678711449675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

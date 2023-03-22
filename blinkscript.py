@@ -1,6 +1,4 @@
-import asyncio
-import time
-
+from multiprocessing import Pool
 import cv2
 import cvzone
 from cvzone.FaceMeshModule import FaceMeshDetector
@@ -36,7 +34,8 @@ def blink_counter(cap):
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
         success, img = cap.read()
-        img, faces = detector.findFaceMesh(img, draw=True)
+
+        img, faces = detector.findFaceMesh(img, draw=False)
 
         # If faces are detected, find the first face and draw circles around the eyes
         if faces:
