@@ -1,10 +1,13 @@
 import cv2 as cv
+import cvzone
 import numpy as np
 import mediapipe as mp
+from cvzone.FaceMeshModule import FaceMeshDetector
 
 
 def iris_position(input_stream):
     mp_face_mesh = mp.solutions.face_mesh
+    detector = FaceMeshDetector(maxFaces=1)
 
     left_eye_landmarks = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]
     right_eye_landmarks = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]
@@ -27,7 +30,6 @@ def iris_position(input_stream):
 
                 # get the height and width of the frame
                 img_h, img_w = frame.shape[:2]
-
                 # apply the face_mesh processing function to the RGB frame to detect face landmarks
                 after_processing = face_mesh.process(rgb_frame)
 
@@ -59,6 +61,21 @@ def iris_position(input_stream):
                     right_lower_eye = facial_landmark_mesh_points[374]
                     right_eye_left_side = facial_landmark_mesh_points[398]
                     right_eye_right_side = facial_landmark_mesh_points[359]
+
+                    distance_left_center, _ = detector.findDistance(left_eye_left_side, center_left_iris)
+                    distance_right_center, _ = detector.findDistance(left_eye_right_side, center_left_iris)
+
+                    distance_upper_from_center, _ = detector.findDistance(left_upper_eye, left_eye_right_side)
+
+                    ratio_left = distance_left_center / distance_upper_from_center * 100
+                    ratio_right = distance_right_center / distance_upper_from_center * 100
+
+                    if ratio_right < 90:
+                        cvzone.putTextRect(frame, "Looking Right", (50, 100))
+                    if 89 < ratio_right < 120:
+                        cvzone.putTextRect(frame, "Looking Center", (50, 100))
+                    if ratio_right > 120:
+                        cvzone.putTextRect(frame, "Looking Left", (50, 100))
 
                     # draw a circle around the left and right iris landmarks on the original frame
                     cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)

@@ -1,26 +1,30 @@
 import cv2
-import blinkscript
-import iris_position_estimation
+from blinkscript import blink_counter
+from iris_position_estimation import iris_position
+from multiprocessing import Pool, Process
+import threading
+import cv2
 
 
 def main():
-    # Webcam
-    # cap = cv2.VideoCapture(0)
+    wencam_stream = cv2.VideoCapture(0)  # Webcam stream
+    blink_stream = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')  # Video with good lighting
+    iris_stream = cv2.VideoCapture('./media/iris.mp4')  # video looking in different directions
 
-    # Video with good lighting
-    cap = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')
+    iris_position(iris_stream)
 
-    # blinkscript.blink_counter(cap)
-    iris_position_estimation.iris_position(cap)
+    # # create a thread for function1
+    # t1 = threading.Thread(target=iris_position, args=(cap,))
+    # # create a thread for function2
+    # t2 = threading.Thread(target=blink_counter, args=(cap2,))
+    #
+    # # start both threads
+    # t1.start()
+    # t2.start()
+    #
+    # t1.join()
+    # t2.join()
 
 
 if __name__ == '__main__':
-    # asyncio.run(main())
     main()
-
-    # Attempt to run both functions async
-    # task1 = asyncio.create_task(blinkscript.blink_counter(cap))
-    # task2 = asyncio.create_task(iris_position_estimation.iris_position(cap))
-    #
-    # # await both tasks to complete
-    # await asyncio.gather(task1, task2)
