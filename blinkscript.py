@@ -7,6 +7,16 @@ from datetime import datetime, timedelta
 import time
 
 
+def blinks_per_min_to_score(blinks):
+    total = 0
+    for b in blinks:
+        total = b + total
+    average_blinks = total / len(blinks)
+    print("Average Blinks : " + str(average_blinks))
+    print("total: " + str(total))
+    return average_blinks
+
+
 def save_data_to_textfile(minute_average):
     # Get current date and time
     now = datetime.now()
@@ -105,6 +115,5 @@ def blink_counter(cap):
         # Wait for a short period and check if the user has pressed 'q' to quit
         if cv2.waitKey(25) & 0xFF == ord('q'):
             # save_data_to_textfile(minute_average)
-            length = len(minute_average) - 1
-
-            return minute_average[length - 1]
+            average_blink_rate = blinks_per_min_to_score(minute_average)
+            return int(average_blink_rate)

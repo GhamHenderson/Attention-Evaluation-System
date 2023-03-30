@@ -7,12 +7,15 @@ import cv2
 
 
 def main():
-    wencam_stream = cv2.VideoCapture(0)  # Webcam stream
+    webcam_stream = cv2.VideoCapture(0)  # Webcam stream
     blink_stream = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')  # Video with good lighting
     iris_stream = cv2.VideoCapture('./media/iris.mp4')  # video looking in different directions
+    iris_right_stream = cv2.VideoCapture('./media/lookingright.mp4')
+    iris_left_stream = cv2.VideoCapture('./media/lookingleft.mp4')
+    up_stream = cv2.VideoCapture('./media/up.mp4')
 
-    iris_position(iris_stream)
-
+    #iris_position(iris_stream)
+    blink_counter(blink_stream)
     # # create a thread for function1
     # t1 = threading.Thread(target=iris_position, args=(cap,))
     # # create a thread for function2

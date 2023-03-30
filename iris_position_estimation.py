@@ -20,6 +20,7 @@ def iris_position(input_stream):
             while True:
                 # read a frame from the input stream
                 ret, frame = input_stream.read()
+                frame = cv.resize(frame, (700, 500))
 
                 # if we have reached the end of the video stream, reset the stream to the beginning
                 if input_stream.get(cv.CAP_PROP_POS_FRAMES) == input_stream.get(cv.CAP_PROP_FRAME_COUNT):
@@ -62,20 +63,25 @@ def iris_position(input_stream):
                     right_eye_left_side = facial_landmark_mesh_points[398]
                     right_eye_right_side = facial_landmark_mesh_points[359]
 
-                    distance_left_center, _ = detector.findDistance(left_eye_left_side, center_left_iris)
+                    distance_whole_eye_verticle, _ = detector.findDistance(left_upper_eye, left_lower_eye)
+                    distance_whole_eye_horizontal, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
+
+                    distance_lower_from_center, _ = detector.findDistance(left_lower_eye, left_eye_right_side)
                     distance_right_center, _ = detector.findDistance(left_eye_right_side, center_left_iris)
 
-                    distance_upper_from_center, _ = detector.findDistance(left_upper_eye, left_eye_right_side)
+                    distance_left_center, _ = detector.findDistance(left_eye_left_side, center_left_iris)
+                    distance_upper_from_center, _ = detector.findDistance(left_upper_eye, center_left_iris)
 
-                    ratio_left = distance_left_center / distance_upper_from_center * 100
-                    ratio_right = distance_right_center / distance_upper_from_center * 100
+                    ratio_left = distance_left_center / distance_whole_eye_verticle * 100
+                    ratio_right = distance_right_center / distance_whole_eye_verticle * 100
 
-                    if ratio_right < 90:
-                        cvzone.putTextRect(frame, "Looking Right", (50, 100))
-                    if 89 < ratio_right < 120:
-                        cvzone.putTextRect(frame, "Looking Center", (50, 100))
-                    if ratio_right > 120:
+                    if ratio_left < 90:
                         cvzone.putTextRect(frame, "Looking Left", (50, 100))
+                    elif ratio_right < 90:
+                        cvzone.putTextRect(frame, "Looking Right", (50, 100))
+
+                    # else:
+                    #     cvzone.putTextRect(frame, "Looking Center", (50, 100))
 
                     # draw a circle around the left and right iris landmarks on the original frame
                     cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
