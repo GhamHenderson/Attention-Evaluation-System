@@ -40,20 +40,26 @@ def blink_counter(cap):
     plot_y = LivePlot(640, 360, [20, 50])
     facial_landmark_list = [22, 23, 24, 26, 110, 157, 158, 159, 160, 161, 130, 243]
     ratioList = []
-    blink_counter = 0
+    blink_counter: int = 0
     threshold = 30
     ratio_average = 0
     counter = 0
-    minute_average = [9, 8, 7]
+    minute_average = [12, 12, 12] # loaded with sample data
+    skip = 0
+
     while True:
-
         timer = datetime.now().second
-
+        # Timer To count blinks every 60 seconds, exclude first minute for accuracy reasons
         if timer == 59:
-            minute_average.append(blink_counter)
-            blink_counter = 0
-            time.sleep(1)
+            if skip != 0:
+                minute_average.append(blink_counter)
+                blink_counter = 0
+                time.sleep(1)
+            else:
+                time.sleep(1)
 
+            skip += 1
+            print(skip)
             print(minute_average)
 
         # If the condition is true, it means that the video has reached its end, and the code is resetting the frame
@@ -86,7 +92,6 @@ def blink_counter(cap):
             ratio = distance_top_bottom / distance_hor * 100
 
             # Keep track of the last few eye aspect ratios and calculate their average
-
             ratioList.append(ratio)
             if len(ratioList) > 5:
                 ratioList.pop(0)

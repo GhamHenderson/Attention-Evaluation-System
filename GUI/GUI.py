@@ -1,12 +1,19 @@
 import tkinter
 import customtkinter
+import cv2
+
 import GUI.calibration as calibration
+from blinkscript import blink_counter
+
 
 
 def open_window():
     def button_callback():
+
+        blink_stream = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')  # Video with good lighting
         app.withdraw()
         calibration.show()
+        # blink_counter(blink_stream)
 
     customtkinter.set_appearance_mode("dark")  # Modes: "System" (standard), "Dark", "Light"
     customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"

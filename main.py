@@ -1,13 +1,12 @@
 from blinkscript import blink_counter
 from iris_position_estimation import iris_position
-from multiprocessing import Pool, Process
-import threading
 import cv2
 from GUI.GUI import open_window
 
 
 def main():
     open_window()
+
     webcam_stream = cv2.VideoCapture(0)  # Webcam stream
     blink_stream = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')  # Video with good lighting
     iris_stream = cv2.VideoCapture('./media/iris.mp4')  # video looking in different directions
@@ -16,6 +15,8 @@ def main():
     up_stream = cv2.VideoCapture('./media/up.mp4')
 
     iris_position(webcam_stream)
+
+
     # blink_counter(blink_stream)
     # # create a thread for function1
     # t1 = threading.Thread(target=iris_position, args=(cap,))
