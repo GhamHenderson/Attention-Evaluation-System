@@ -19,7 +19,8 @@ def iris_position(input_stream):
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
             while True:
                 # read a frame from the input stream
-                ret, frame = input_stream.read()
+                img, frame = input_stream.read()
+
                 frame = cv.resize(frame, (700, 500))
 
                 # if we have reached the end of the video stream, reset the stream to the beginning
@@ -63,47 +64,27 @@ def iris_position(input_stream):
                     right_eye_left_side = facial_landmark_mesh_points[398]
                     right_eye_right_side = facial_landmark_mesh_points[359]
 
-                    # Calculate the vertical center of the left eye
-                    left_eye_vertical_center = (left_upper_eye + left_lower_eye) / 2
+                    distance_whole_eye_verticle, _ = detector.findDistance(left_upper_eye, left_lower_eye)
+                    distance_whole_eye_horizontal, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
 
-                    # Calculate the horizontal center of the left eye
-                    left_eye_horizontal_center = (left_eye_left_side + left_eye_right_side) / 2
+                    distance_lower_from_center, _ = detector.findDistance(left_lower_eye, left_eye_right_side)
+                    distance_right_center, _ = detector.findDistance(left_eye_right_side, center_left_iris)
 
-                    # Calculate the distance between the center of the iris and the vertical and horizontal centers
-                    # of the left eye
-                    distance_to_vertical_center = center_left_iris[1] - left_eye_vertical_center[1]
-                    distance_to_horizontal_center = center_left_iris[0] - left_eye_horizontal_center[0]
+                    distance_left_center, _ = detector.findDistance(left_eye_left_side, center_left_iris)
+                    distance_upper_from_center, _ = detector.findDistance(left_upper_eye, center_left_iris)
 
-                    # Determine the direction in which the eye is looking based on the signs of the distance values
-                    if distance_to_vertical_center > 0 and distance_to_horizontal_center > 0:
-                        print("Eye is looking towards top right")
-                    elif distance_to_vertical_center > 0 and distance_to_horizontal_center < 0:
-                        print("Eye is looking towards top left")
-                    elif distance_to_vertical_center < 0 and distance_to_horizontal_center > 0:
-                        print("Eye is looking towards bottom right")
+                    ratio_left = distance_left_center / distance_whole_eye_verticle * 100
+                    ratio_right = distance_right_center / distance_whole_eye_verticle * 100
+
+                    threshold_left = 90
+                    threshold_right = 90
+
+                    if ratio_left < threshold_left:
+                        cvzone.putTextRect(frame, "Looking Left", (50, 100))
+                    elif ratio_right < threshold_right:
+                        cvzone.putTextRect(frame, "Looking Right", (50, 100))
                     else:
-                        print("Eye is looking towards bottom left")
-
-
-                    # distance_whole_eye_verticle, _ = detector.findDistance(left_upper_eye, left_lower_eye)
-                    # distance_whole_eye_horizontal, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
-                    #
-                    # distance_lower_from_center, _ = detector.findDistance(left_lower_eye, left_eye_right_side)
-                    # distance_right_center, _ = detector.findDistance(left_eye_right_side, center_left_iris)
-                    #
-                    # distance_left_center, _ = detector.findDistance(left_eye_left_side, center_left_iris)
-                    # distance_upper_from_center, _ = detector.findDistance(left_upper_eye, center_left_iris)
-                    #
-                    # ratio_left = distance_left_center / distance_whole_eye_verticle * 100
-                    # ratio_right = distance_right_center / distance_whole_eye_verticle * 100
-                    #
-                    # if ratio_left < 90:
-                    #     cvzone.putTextRect(frame, "Looking Left", (50, 100))
-                    # elif ratio_right < 90:
-                    #     cvzone.putTextRect(frame, "Looking Right", (50, 100))
-
-                    # else:
-                    #     cvzone.putTextRect(frame, "Looking Center", (50, 100))
+                        cvzone.putTextRect(frame, "Looking Center", (50, 100))
 
                     # draw a circle around the left and right iris landmarks on the original frame
                     cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)

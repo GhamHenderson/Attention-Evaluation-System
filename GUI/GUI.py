@@ -6,7 +6,6 @@ import GUI.calibration as calibration
 from blinkscript import blink_counter
 
 
-
 def open_window():
     def button_callback():
 
@@ -36,5 +35,6 @@ def open_window():
     label_2 = customtkinter.CTkLabel(master=frame_1, justify=tkinter.LEFT)
     label_2.configure(text="")
     label_2.pack(pady=10, padx=10)
+
 
     app.mainloop()

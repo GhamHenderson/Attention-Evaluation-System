@@ -1,5 +1,5 @@
 from multiprocessing import Pool
-import cv2
+import cv2 as cv
 import cvzone
 from cvzone.FaceMeshModule import FaceMeshDetector
 from cvzone.PlotModule import LivePlot
@@ -44,7 +44,7 @@ def blink_counter(cap):
     threshold = 30
     ratio_average = 0
     counter = 0
-    minute_average = [12, 12, 12] # loaded with sample data
+    minute_average = [12, 12, 12]  # loaded with sample data
     skip = 0
 
     while True:
@@ -64,8 +64,8 @@ def blink_counter(cap):
 
         # If the condition is true, it means that the video has reached its end, and the code is resetting the frame
         # position to 0
-        if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
-            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        if cap.get(cv.CAP_PROP_POS_FRAMES) == cap.get(cv.CAP_PROP_FRAME_COUNT):
+            cap.set(cv.CAP_PROP_POS_FRAMES, 0)
 
         success, img = cap.read()
 
@@ -75,7 +75,7 @@ def blink_counter(cap):
         if faces:
             face = faces[0]
             for i in facial_landmark_list:
-                cv2.circle(img, face[i], 5, (255, 0, 255), cv2.FILLED)
+                cv.circle(img, face[i], 5, (255, 0, 255), cv.FILLED)
 
             # Calculate the eye aspect ratio and store it in a variable
             left_upper_eye = face[159]
@@ -86,8 +86,8 @@ def blink_counter(cap):
             distance_top_bottom, _ = detector.findDistance(left_upper_eye, left_lower_eye)
             distance_hor, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
 
-            cv2.line(img, left_upper_eye, left_lower_eye, (0, 200, 0), 3)
-            cv2.line(img, left_eye_left_side, left_eye_right_side, (0, 200, 0), 3)
+            cv.line(img, left_upper_eye, left_lower_eye, (0, 200, 0), 3)
+            cv.line(img, left_eye_left_side, left_eye_right_side, (0, 200, 0), 3)
 
             ratio = distance_top_bottom / distance_hor * 100
 
@@ -113,12 +113,12 @@ def blink_counter(cap):
             cvzone.putTextRect(img, "Blink Count : " + str(blink_counter), (50, 100))
 
         # Resize the image for display and show it
-        img = cv2.resize(img, (640, 360))
-        cv2.imshow("Image", img)
-        cv2.imshow("ImagePlot", plot_image)
+        img = cv.resize(img, (640, 360))
+        cv.imshow("Image", img)
+        cv.imshow("ImagePlot", plot_image)
 
         # Wait for a short period and check if the user has pressed 'q' to quit
-        if cv2.waitKey(25) & 0xFF == ord('q'):
+        if cv.waitKey(25) & 0xFF == ord('q'):
             # save_data_to_textfile(minute_average)
             average_blink_rate = blinks_per_min_to_score(minute_average)
             return int(average_blink_rate)
