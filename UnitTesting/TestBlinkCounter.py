@@ -24,20 +24,21 @@ class TestBlinkCounter(unittest.TestCase):
     # make sure an instance of the window is established.
     def test_blink_counter(self):
         blink_count = blink_counter(cap)
-        self.assertIsInstance(blink_count, int)
+        self.assertIsInstance(blink_count, list)
 
-    def test_ensure_returns_valid_int(self):
+    def test_ensure_returns_valid_list(self):
         result = blink_counter(cap)
-        self.assertIsInstance(result, int)
+        self.assertIsInstance(result, list)
         # ensure blink counter is greater than 0
-        self.assertGreaterEqual(result, 0)
+        self.assertNotEqual(len(result), 0)
 
     def test_blink_counter_with_known_blink_video(self):
         # Call the blink_counter function on the test video
         blink_count = blink_counter(cap)
 
+        expected_sample_returned = [12, 12, 12]
         # Assert that the blink count matches the expected number of blinks
-        self.assertEqual(blink_count, 8)
+        self.assertEqual(len(blink_count), len(expected_sample_returned))
 
     @unittest.expectedFailure
     def test_fail(self):

@@ -8,7 +8,6 @@ from blinkscript import blink_counter
 
 def open_window():
     def button_callback():
-
         blink_stream = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')  # Video with good lighting
         app.withdraw()
         calibration.show()

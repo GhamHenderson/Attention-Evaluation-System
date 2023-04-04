@@ -110,9 +110,9 @@ def iris_position(input_stream):
                     cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
                     cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
 
-                cv.imshow('img', frame)
+                    cv.imshow('img', frame)
 
                 if cv.waitKey(25) & 0xFF == ord('q'):
-                    break
-        input_stream.release()
-        cv.destroyAllWindows()
+                    input_stream.release()
+                    cv.destroyAllWindows()
+                    return "IRIS DATA"
