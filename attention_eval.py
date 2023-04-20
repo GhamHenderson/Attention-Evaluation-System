@@ -6,28 +6,37 @@ import keyboard
 import numpy as np
 import mediapipe as mp
 from cvzone.FaceMeshModule import FaceMeshDetector
+import tkinter as tk
 
 
-def iris_position(input_stream):
+def attention_tracker(input_stream, iris_threshold):
     mp_face_mesh = mp.solutions.face_mesh
     detector = FaceMeshDetector(maxFaces=1)
 
     left_eye_landmarks = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]
     right_eye_landmarks = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]
-
+    blink_counter: int = 0
     left_iris_landmarks = [474, 475, 476, 477]
     right_iris_landmarks = [469, 470, 471, 472]
-
-    iris_eye_positions = []
-
+    ratioList = []
+    i = 0
+    threshold = 30
+    ratio_average = 0
+    counter = 0
+    minute_average = [12, 12, 12]  # loaded with sample data
+    skip = 0
+    iris_data = [0,0]
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
             while True:
 
                 # read a frame from the input stream
                 img, frame = input_stream.read()
-
-                frame = cv.resize(frame, (700, 500))
+                root = tk.Tk()
+                root.withdraw()
+                screen_width = root.winfo_screenwidth()
+                screen_height = root.winfo_screenheight()
+                frame = cv.resize(frame, (screen_width, screen_height))
 
                 # if we have reached the end of the video stream, reset the stream to the beginning
                 if input_stream.get(cv.CAP_PROP_POS_FRAMES) == input_stream.get(cv.CAP_PROP_FRAME_COUNT):
@@ -82,59 +91,78 @@ def iris_position(input_stream):
                     ratio_left = distance_left_center / distance_whole_eye_verticle * 100
                     ratio_right = distance_right_center / distance_whole_eye_verticle * 100
 
-                    threshold_left = 90
-                    threshold_right = 90
+                    # draw a circle around the left and right iris landmarks on the original frame
+                    cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
+                    cv.circle(frame, center_left_iris, int(right_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
 
-                    print(int(distance_left_center))
+                    # draw lines for left eye
+                    cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_left_iris, left_upper_eye, (0, 200, 0), 3)
+                    cv.line(frame, center_left_iris, left_lower_eye, (0, 200, 0), 3)
+
+                    # Draw Lines for right eye
+                    cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
+                    cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
+
+                    cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
+                    cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
+                    cvzone.putTextRect(frame, "Blink Count : " + str(blink_counter), (50, 100))
+                    cvzone.putTextRect(frame, "Times Looked Off Screen : 0", (50, 150))
+                    cv.imshow('img', frame)
+
+                ''' Blink Feature '''
+
+                distance_top_bottom, _ = detector.findDistance(left_upper_eye, left_lower_eye)
+                distance_hor, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
+
+                cv.line(img, left_upper_eye, left_lower_eye, (0, 200, 0), 3)
+                cv.line(img, left_eye_left_side, left_eye_right_side, (0, 200, 0), 3)
+
+                ratio = distance_top_bottom / distance_hor * 100
+
+                # Keep track of the last few eye aspect ratios and calculate their average
+                ratioList.append(ratio)
+                if len(ratioList) > 5:
+                    ratioList.pop(0)
+                    ratio_average = sum(ratioList) / len(ratioList)
+
+                # If the eye aspect ratio falls below a threshold, increment the blink counter
+                if ratio_average < 35 and counter == 0:
+                    blink_counter += 1
+                    counter = 1
+                if counter != 0:
+                    counter += 1
+                    if counter > 10:  # After 10 frames
+                        counter = 0
+
+                    ''' Iris Feature '''
+
+                    left_iris_threshold = iris_threshold[0]
+                    right_iris_threshold = iris_threshold[1]
+                    up_iris_threshold = iris_threshold[2]
+                    down_iris_threshold = iris_threshold[3]
+                    
                     try:
-                        # draw a circle around the left and right iris landmarks on the original frame
-                        cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
-                        cv.circle(frame, center_left_iris, int(right_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
-
-                        # draw lines for left eye
-                        cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
-                        cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
-
-                        cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
-                        cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
-
-                        cv.line(frame, center_left_iris, left_upper_eye, (0, 200, 0), 3)
-                        cv.line(frame, center_left_iris, left_lower_eye, (0, 200, 0), 3)
-
-                        # Draw Lines for right eye
-                        cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
-                        cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
-
-                        cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
-                        cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
-
-                        cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
-                        cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
-
-                        cv.imshow('img', frame)
+                        if distance_left_center > left_iris_threshold:
+                            cvzone.putTextRect(frame, "Looking Left", (50, 100))
+                        elif distance_left_center < right_iris_threshold:
+                            cvzone.putTextRect(frame, "Looking Right", (50, 100))
+                        else:
+                            cvzone.putTextRect(frame, "Looking Center", (50, 100))
                     except:
-                        print("No Eye Detected")
-
-                    if keyboard.is_pressed('space') and len(iris_eye_positions) < 4:
-                        iris_eye_positions.append(distance_left_center)
-                        print(iris_eye_positions)
-                        time.sleep(1)
-                    elif keyboard.is_pressed('space') and len(iris_eye_positions) is 4:
-                        print("Move onto next step")
-                        time.sleep(1)
+                        print("not yet")
 
                     if cv.waitKey(25) & 0xFF == ord('q'):
                         input_stream.release()
                         cv.destroyAllWindows()
-                        return "IRIS DATA"
+                        return iris_data, minute_average
 
 
-                        # try:
-                        #     if distance_left_center > iris_eye_positions[0]:
-                        #         cvzone.putTextRect(frame, "Looking Left", (50, 100))
-                        #     elif distance_left_center < iris_eye_positions[1]:
-                        #         cvzone.putTextRect(frame, "Looking Right", (50, 100))
-                        #     else:
-                        #         cvzone.putTextRect(frame, "Looking Center", (50, 100))
-                        # except:
-                        #     print("not yet")

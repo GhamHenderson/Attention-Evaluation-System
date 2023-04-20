@@ -33,7 +33,7 @@ def button_callback():
         blink_stream = cv2.VideoCapture('./media/WIN_20230215_15_08_52_Pro.mp4')  # Video with good lighting
         iris_stream = cv2.VideoCapture('./media/iris.mp4')  # video looking in different directions
 
-        iris_info = iris_position_estimation.iris_position(iris_stream)
+        iris_info = iris_position_estimation.attention_tracker(iris_stream)
         blink_ratio_list = blink_counter(blink_stream)  # Blink Detector and Attached Logic returns List of Blinks
 
         attention_score(iris_info, blink_ratio_list)  # Combine Outputs to Create an Attention Score

@@ -8,6 +8,7 @@ import mediapipe as mp
 from cvzone.FaceMeshModule import FaceMeshDetector
 import tkinter as tk
 
+
 def iris_position(input_stream):
     mp_face_mesh = mp.solutions.face_mesh
     detector = FaceMeshDetector(maxFaces=1)
@@ -157,7 +158,6 @@ def iris_position(input_stream):
                         time.sleep(1)
 
                     elif keyboard.is_pressed('space') and len(iris_eye_positions) == 4:
-                        text = "Done"
                         return iris_eye_positions
 
                     if cv.waitKey(25) & 0xFF == ord('q'):
