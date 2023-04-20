@@ -3,6 +3,7 @@ def attention_score(iris, blinks):
     for b in blinks:
         total_blinks = b + total_blinks
     average_blinks = total_blinks / len(blinks)
+
     print("Average Blinks : " + str(average_blinks))
     print("total: " + str(total_blinks))
     print("Iris Info : " + iris)

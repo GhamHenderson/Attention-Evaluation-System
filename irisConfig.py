@@ -1,5 +1,8 @@
+import time
+
 import cv2 as cv
 import cvzone
+import keyboard
 import numpy as np
 import mediapipe as mp
 from cvzone.FaceMeshModule import FaceMeshDetector
@@ -15,13 +18,18 @@ def iris_position(input_stream):
     left_iris_landmarks = [474, 475, 476, 477]
     right_iris_landmarks = [469, 470, 471, 472]
 
+    iris_eye_positions = []
+    text = "Look Left and press spacebar"
+    i = 0
+
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
             while True:
+
                 # read a frame from the input stream
                 img, frame = input_stream.read()
 
-                frame = cv.resize(frame, (700, 500))
+                frame = cv.resize(frame, (1000, 700))
 
                 # if we have reached the end of the video stream, reset the stream to the beginning
                 if input_stream.get(cv.CAP_PROP_POS_FRAMES) == input_stream.get(cv.CAP_PROP_FRAME_COUNT):
@@ -79,40 +87,71 @@ def iris_position(input_stream):
                     threshold_left = 90
                     threshold_right = 90
 
-                    if ratio_left < threshold_left:
-                        cvzone.putTextRect(frame, "Looking Left", (50, 100))
-                    elif ratio_right < threshold_right:
-                        cvzone.putTextRect(frame, "Looking Right", (50, 100))
-                    else:
-                        cvzone.putTextRect(frame, "Looking Center", (50, 100))
+                    try:
+                        # draw a circle around the left and right iris landmarks on the original frame
+                        cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
+                        cv.circle(frame, center_left_iris, int(right_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
 
-                    # draw a circle around the left and right iris landmarks on the original frame
-                    cv.circle(frame, center_right_iris, int(left_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
-                    cv.circle(frame, center_left_iris, int(right_radius - 5), (255, 0, 255), 1, cv.LINE_AA)
+                        # draw lines for left eye
+                        cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
+                        cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
 
-                    # draw lines for left eye
-                    cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
-                    cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
+                        cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
+                        cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
 
-                    cv.line(frame, center_left_iris, left_eye_left_side, (0, 200, 0), 3)
-                    cv.line(frame, center_left_iris, left_eye_right_side, (0, 200, 0), 3)
+                        cv.line(frame, center_left_iris, left_upper_eye, (0, 200, 0), 3)
+                        cv.line(frame, center_left_iris, left_lower_eye, (0, 200, 0), 3)
 
-                    cv.line(frame, center_left_iris, left_upper_eye, (0, 200, 0), 3)
-                    cv.line(frame, center_left_iris, left_lower_eye, (0, 200, 0), 3)
+                        # Draw Lines for right eye
+                        cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
+                        cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
 
-                    # Draw Lines for right eye
-                    cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
-                    cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
+                        cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
+                        cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
 
-                    cv.line(frame, center_right_iris, right_eye_left_side, (0, 200, 0), 3)
-                    cv.line(frame, center_right_iris, right_eye_right_side, (0, 200, 0), 3)
+                        cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
+                        cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
+                        cvzone.putTextRect(frame, text, (50, 100))
+                        cv.imshow('img', frame)
+                    except:
+                        print("No Eye Detected")
 
-                    cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
-                    cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
+                    if keyboard.is_pressed('space') and len(iris_eye_positions) < 4:
+                        i += 1
+                        if i == 1:
+                            iris_eye_positions.append("Left" + str(distance_left_center))
 
-                    cv.imshow('img', frame)
+                            text = "Look Right and Press Spacebar"
+                        elif i == 2:
+                            iris_eye_positions.append("Right" + str(distance_upper_from_center))
 
-                if cv.waitKey(25) & 0xFF == ord('q'):
-                    input_stream.release()
-                    cv.destroyAllWindows()
-                    return "IRIS DATA"
+                            text = "Look Up and Press Spacebar"
+                        elif i == 3:
+                            iris_eye_positions.append("Up" + str(distance_upper_from_center))
+
+                            text = "Look Down and Press Spacebar"
+                        elif i == 4:
+                            iris_eye_positions.append("Down" + str(distance_upper_from_center))
+
+                            text = "Press Space to Move on"
+                            print(iris_eye_positions)
+
+                        time.sleep(1)
+
+                    elif keyboard.is_pressed('space') and len(iris_eye_positions) == 4:
+                        text = "Done"
+                        return iris_eye_positions
+
+                    if cv.waitKey(25) & 0xFF == ord('q'):
+                        input_stream.release()
+                        cv.destroyAllWindows()
+
+                        # try:
+                        #     if distance_left_center > iris_eye_positions[0]:
+                        #         cvzone.putTextRect(frame, "Looking Left", (50, 100))
+                        #     elif distance_left_center < iris_eye_positions[1]:
+                        #         cvzone.putTextRect(frame, "Looking Right", (50, 100))
+                        #     else:
+                        #         cvzone.putTextRect(frame, "Looking Center", (50, 100))
+                        # except:
+                        #     print("not yet")

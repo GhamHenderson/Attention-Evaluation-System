@@ -5,7 +5,7 @@ from cvzone.FaceMeshModule import FaceMeshDetector
 import mediapipe as mp
 from numpy.core.defchararray import upper
 from Attention_score import attention_score
-import iris_position_estimation
+import irisConfig
 from blinkscript import blink_counter
 import cv2 as cv
 import numpy as np

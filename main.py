@@ -1,9 +1,12 @@
-from GUI.GUI import open_window
+import cv2
+
+from irisConfig import iris_position
 
 
 def main():
-    open_window()  # Open GUI Window and begin user configuration
+    blink_stream = cv2.VideoCapture(0)
+    iris_position(blink_stream)  # Open GUI Window and begin user configuration
 
-
+# './media/iris.mp4'
 if __name__ == '__main__':
     main()

@@ -5,6 +5,7 @@ from cvzone.FaceMeshModule import FaceMeshDetector
 from cvzone.PlotModule import LivePlot
 from datetime import datetime, timedelta
 import time
+import keyboard
 
 
 def save_data_to_textfile(minute_average):
