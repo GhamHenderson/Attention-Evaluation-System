@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="85941126-63e2-43ee-a5c8-9b3901b83064" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Attention_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/Attention_score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/calibration.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/calibration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blinkscript.py" beforeDir="false" afterPath="$PROJECT_DIR$/blinkscript.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iris_position_estimation.py" beforeDir="false" afterPath="$PROJECT_DIR$/irisConfig.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/irisConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/irisConfig.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +204,7 @@
       <workItem from="1680619439039" duration="660000" />
       <workItem from="1680699425622" duration="133000" />
       <workItem from="1681905823263" duration="92000" />
-      <workItem from="1681990414055" duration="4618000" />
+      <workItem from="1681990414055" duration="6354000" />
     </task>
     <servers />
   </component>
@@ -229,7 +224,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AttentionAI$blinkscript.coverage" NAME="blinkscript Coverage Results" MODIFIED="1681991410254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1681995023004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1681996268444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$.coverage" NAME=" Coverage Results" MODIFIED="1680612596747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/UnitTesting" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation__1_.coverage" NAME="iris_position_estimation (1) Coverage Results" MODIFIED="1680260671112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation.coverage" NAME="iris_position_estimation Coverage Results" MODIFIED="1680531909925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

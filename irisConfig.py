@@ -6,7 +6,7 @@ import keyboard
 import numpy as np
 import mediapipe as mp
 from cvzone.FaceMeshModule import FaceMeshDetector
-
+import tkinter as tk
 
 def iris_position(input_stream):
     mp_face_mesh = mp.solutions.face_mesh
@@ -28,8 +28,11 @@ def iris_position(input_stream):
 
                 # read a frame from the input stream
                 img, frame = input_stream.read()
-
-                frame = cv.resize(frame, (1000, 700))
+                root = tk.Tk()
+                root.withdraw()
+                screen_width = root.winfo_screenwidth()
+                screen_height = root.winfo_screenheight()
+                frame = cv.resize(frame, (screen_width, screen_height))
 
                 # if we have reached the end of the video stream, reset the stream to the beginning
                 if input_stream.get(cv.CAP_PROP_POS_FRAMES) == input_stream.get(cv.CAP_PROP_FRAME_COUNT):
@@ -112,6 +115,21 @@ def iris_position(input_stream):
                         cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
                         cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
                         cvzone.putTextRect(frame, text, (50, 100))
+
+                        # Calculate dot positions based on screen width
+                        dot_size = 40
+                        dot_color = (0, 0, 255)
+                        padding = int(screen_width * 0.1)  # 10% of screen width
+                        frame_height, frame_width, _ = frame.shape
+                        center_x = int(frame_width / 2)
+                        center_y = int(frame_height / 2)
+
+                        # Draw dots in the center of each side
+                        cv.circle(frame, (center_x, padding), dot_size, dot_color, -1)  # Top center
+                        cv.circle(frame, (center_x, frame_height - padding), dot_size, dot_color, -1)  # Bottom center
+                        cv.circle(frame, (padding, center_y), dot_size, dot_color, -1)  # Left center
+                        cv.circle(frame, (frame_width - padding, center_y), dot_size, dot_color, -1)  # Right center
+
                         cv.imshow('img', frame)
                     except:
                         print("No Eye Detected")
@@ -119,20 +137,20 @@ def iris_position(input_stream):
                     if keyboard.is_pressed('space') and len(iris_eye_positions) < 4:
                         i += 1
                         if i == 1:
-                            iris_eye_positions.append("Left" + str(distance_left_center))
+                            iris_eye_positions.append(distance_left_center)
 
                             text = "Look Right and Press Spacebar"
+                            print(iris_eye_positions)
                         elif i == 2:
-                            iris_eye_positions.append("Right" + str(distance_upper_from_center))
-
+                            iris_eye_positions.append(distance_left_center)
+                            print(iris_eye_positions)
                             text = "Look Up and Press Spacebar"
                         elif i == 3:
-                            iris_eye_positions.append("Up" + str(distance_upper_from_center))
-
+                            iris_eye_positions.append(distance_upper_from_center)
+                            print(iris_eye_positions)
                             text = "Look Down and Press Spacebar"
                         elif i == 4:
-                            iris_eye_positions.append("Down" + str(distance_upper_from_center))
-
+                            iris_eye_positions.append(distance_upper_from_center)
                             text = "Press Space to Move on"
                             print(iris_eye_positions)
 
