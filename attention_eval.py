@@ -1,5 +1,5 @@
 import time
-
+from datetime import datetime
 import cv2 as cv
 import cvzone
 import keyboard
@@ -7,6 +7,24 @@ import numpy as np
 import mediapipe as mp
 from cvzone.FaceMeshModule import FaceMeshDetector
 import tkinter as tk
+
+
+def save_data_to_textfile(minute_average):
+    # Get current date and time
+    now = datetime.now()
+
+    # Create filename using current date and time
+    filename = now.strftime("blink_records/blinkrate_%m-%d_%H.txt")
+
+    # Use filename to create new file
+    with open(filename, 'w') as f:
+        f.write("\n\n{}\n[\n".format(now))
+        for i, item in enumerate(minute_average):
+            if i == len(minute_average) - 1:
+                f.write("   {{ Minute:{}, Blink Rate: {}}}\n] \n".format(i, item))
+            else:
+                f.write("   {{ Minute:{}, Blink Rate: {}}}, \n".format(i, item))
+    f.close()
 
 
 def attention_tracker(input_stream, iris_threshold):
@@ -25,7 +43,7 @@ def attention_tracker(input_stream, iris_threshold):
     counter = 0
     minute_average = [12, 12, 12]  # loaded with sample data
     skip = 0
-    iris_data = [0,0]
+    iris_data = [0, 0]
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
             while True:
@@ -120,6 +138,21 @@ def attention_tracker(input_stream, iris_threshold):
 
                 ''' Blink Feature '''
 
+                '''
+                Every Minute Take total blinks and add to  array containing total.
+                '''
+                timer = datetime.now().second
+                # Timer To count blinks every 60 seconds, exclude first minute for accuracy reasons
+                if timer == 59:
+                    if skip != 0:
+                        minute_average.append(blink_counter)
+                        blink_counter = 0
+                        time.sleep(1)
+                    else:
+                        time.sleep(1)
+
+                    skip += 1
+
                 distance_top_bottom, _ = detector.findDistance(left_upper_eye, left_lower_eye)
                 distance_hor, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
 
@@ -149,20 +182,16 @@ def attention_tracker(input_stream, iris_threshold):
                     right_iris_threshold = iris_threshold[1]
                     up_iris_threshold = iris_threshold[2]
                     down_iris_threshold = iris_threshold[3]
-                    
-                    try:
-                        if distance_left_center > left_iris_threshold:
-                            cvzone.putTextRect(frame, "Looking Left", (50, 100))
-                        elif distance_left_center < right_iris_threshold:
-                            cvzone.putTextRect(frame, "Looking Right", (50, 100))
-                        else:
-                            cvzone.putTextRect(frame, "Looking Center", (50, 100))
-                    except:
-                        print("not yet")
+
+                    if distance_left_center > left_iris_threshold:
+                        print("Looking Left")
+                    elif distance_left_center < right_iris_threshold:
+                        print("Looking Right")
+                    else:
+                        print("Looking Central")
+
 
                     if cv.waitKey(25) & 0xFF == ord('q'):
                         input_stream.release()
                         cv.destroyAllWindows()
                         return iris_data, minute_average
-
-

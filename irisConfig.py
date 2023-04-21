@@ -147,11 +147,11 @@ def iris_position(input_stream):
                             print(iris_eye_positions)
                             text = "Look Up and Press Spacebar"
                         elif i == 3:
-                            iris_eye_positions.append(distance_upper_from_center)
+                            iris_eye_positions.append(distance_lower_from_center)
                             print(iris_eye_positions)
                             text = "Look Down and Press Spacebar"
                         elif i == 4:
-                            iris_eye_positions.append(distance_upper_from_center)
+                            iris_eye_positions.append(distance_lower_from_center)
                             text = "Press Space to Move on"
                             print(iris_eye_positions)
 
@@ -163,13 +163,4 @@ def iris_position(input_stream):
                     if cv.waitKey(25) & 0xFF == ord('q'):
                         input_stream.release()
                         cv.destroyAllWindows()
-
-                        # try:
-                        #     if distance_left_center > iris_eye_positions[0]:
-                        #         cvzone.putTextRect(frame, "Looking Left", (50, 100))
-                        #     elif distance_left_center < iris_eye_positions[1]:
-                        #         cvzone.putTextRect(frame, "Looking Right", (50, 100))
-                        #     else:
-                        #         cvzone.putTextRect(frame, "Looking Center", (50, 100))
-                        # except:
-                        #     print("not yet")
+                        return "Program Exited"
