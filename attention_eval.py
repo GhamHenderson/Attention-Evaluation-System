@@ -46,6 +46,7 @@ def attention_tracker(input_stream, iris_threshold):
     iris_data = [0, 0]
     off_screen_count = 0
     mouth_open = False
+    yawn_total = 0
     count = 0
 
     while True:
@@ -138,13 +139,12 @@ def attention_tracker(input_stream, iris_threshold):
                     cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
                     cvzone.putTextRect(frame, "Blink Count : " + str(blink_counter), (50, 100))
                     cvzone.putTextRect(frame, "Times Looked Off Screen : " + str(off_screen_count), (50, 150))
+                    cvzone.putTextRect(frame, "Yawns Detected : " + str(yawn_total), (50, 200))
                     cv.imshow('img', frame)
 
                 ''' Blink Feature '''
 
-                '''
-                Every Minute Take total blinks and add to  array containing total.
-                '''
+                # Every Minute Take total blinks and add to  array containing total.
                 timer = datetime.now().second
                 # Timer To count blinks every 60 seconds, exclude first minute for accuracy reasons
                 if timer == 59:
@@ -180,40 +180,62 @@ def attention_tracker(input_stream, iris_threshold):
                     if counter > 10:  # After 10 frames
                         counter = 0
 
-                    ''' Iris Feature '''
+                ''' Iris Feature '''
 
-                    left_iris_threshold = iris_threshold[0]
-                    right_iris_threshold = iris_threshold[1]
-                    up_iris_threshold = iris_threshold[2]
-                    down_iris_threshold = iris_threshold[3]
+                left_iris_threshold = iris_threshold[0]
+                right_iris_threshold = iris_threshold[1]
+                up_iris_threshold = iris_threshold[2]
+                down_iris_threshold = iris_threshold[3]
 
-                    # Check If User is looking left or right using threshold values.
-                    print(distance_left_center)
-                    if distance_left_center > left_iris_threshold:
-                        print("Looking Right")
-                    elif distance_left_center < right_iris_threshold:
-                        print("Looking Left")
+                # Check If User is looking left or right using threshold values.
+                print(distance_left_center)
+                if distance_left_center > left_iris_threshold:
+                    print("Looking Right")
+                elif distance_left_center < right_iris_threshold:
+                    print("Looking Left")
 
-                    # Check If User is looking off-screen using threshold values
-                    if distance_left_center < left_iris_threshold - 3 or distance_left_center > right_iris_threshold + 3:
-                        print("Looking Off Screen")
-                        off_screen_count += 1
+                # Check If User is looking off-screen using threshold values
+                if distance_left_center < left_iris_threshold - 3 or distance_left_center > right_iris_threshold + 3:
+                    print("Looking Off Screen")
+                    off_screen_count += 1
 
-                    # Check If User is looking up or down using threshold values.
-                    if distance_lower_from_center > up_iris_threshold:
-                        print("Looking Up")
-                    elif distance_lower_from_center < down_iris_threshold:
-                        print("Looking Down")
+                # Check If User is looking up or down using threshold values.
+                if distance_lower_from_center > up_iris_threshold:
+                    print("Looking Up")
+                elif distance_lower_from_center < down_iris_threshold:
+                    print("Looking Down")
 
-                        ''' Yawn Detection '''
+                ''' Yawn Detection '''
 
-                    if ratio_average < 35 and mouth_open:
-                        count += 1
-                        if count > 5:
-                            print("Yawn Detected")
-                            mouth_open = False
+                left_side_mouth = facial_landmark_mesh_points[185]
+                right_side_mouth = facial_landmark_mesh_points[409]
+                top_lip = facial_landmark_mesh_points[13]
+                bottom_lip = facial_landmark_mesh_points[14]
+                distance_mouth, _ = detector.findDistance(top_lip, bottom_lip)
+                distance_mouth_side, _ = detector.findDistance(left_side_mouth, right_side_mouth)
+                mouth_ratio = distance_mouth / distance_mouth_side * 100
 
-                    if cv.waitKey(25) & 0xFF == ord('q'):
+                if ratio_average < 35 and mouth_ratio > 50 and not mouth_open:
+                    count += 1
+                    if count > 10:
+                        yawn_total += 1
+                        count = 0
+                        mouth_open = True
+
+                # reset boolean once mouth has closed and yawn has ended
+                if mouth_ratio < 20:
+                    mouth_open = False
+
+                if cv.waitKey(25) & 0xFF == ord('q'):
+                    try:
                         input_stream.release()
                         cv.destroyAllWindows()
                         return iris_data, minute_average
+                    except Exception as ex:
+                        print("error : " + str(ex))
+                        return iris_data, minute_average
+
+
+'''
+Next Fine Tune Iris Tracking.
+'''

@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="85941126-63e2-43ee-a5c8-9b3901b83064" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/attention_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/attention_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,9 +53,9 @@
       <recent name="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI\media" />
       <recent name="C:\Users\graha\Documents\GitHub\AttentionAI\GUI" />
       <recent name="C:\Users\graha\Documents\GitHub\AttentionAI\media" />
-      <recent name="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI\media" />
       <recent name="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI\GUI" />
       <recent name="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI\KerasModelCreation" />
     </key>
@@ -208,7 +210,8 @@
       <workItem from="1681990414055" duration="8127000" />
       <workItem from="1682001038373" duration="2223000" />
       <workItem from="1682105760633" duration="1527000" />
-      <workItem from="1682336492790" duration="2153000" />
+      <workItem from="1682336492790" duration="3643000" />
+      <workItem from="1682352804922" duration="1466000" />
     </task>
     <servers />
   </component>
@@ -228,7 +231,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AttentionAI$blinkscript.coverage" NAME="blinkscript Coverage Results" MODIFIED="1681991410254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1682337995378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1682354229419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$.coverage" NAME=" Coverage Results" MODIFIED="1680612596747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/UnitTesting" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation__1_.coverage" NAME="iris_position_estimation (1) Coverage Results" MODIFIED="1680260671112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation.coverage" NAME="iris_position_estimation Coverage Results" MODIFIED="1680531909925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

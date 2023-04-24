@@ -8,6 +8,8 @@ AttentionAI is a Python software used to implement tools such as Eye Tracking, b
 
 Supervised by Dr.Simon Mcloughlin 
 
-Source Code Built with Python 3.10 and it wont run with more recent versions of Python.
+Source Code Built with Python 3.10, it won't run with more recent versions of Python.
 
 requirements.txt included use "pip install -r requirements.txt" to install all dependencies.
+
+Press "q" to end program at any time and follow instructions during initial setup.

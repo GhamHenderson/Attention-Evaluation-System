@@ -6,7 +6,7 @@ from Attention_score import attention_score
 
 
 def main():
-    blink_stream = cv2.VideoCapture('./media/iris.mp4')
+    blink_stream = cv2.VideoCapture('./media/yawn.mp4')
 
     iris_threshold_coords = iris_position(blink_stream)  # Open GUI Window and begin user configuration
     iris, blinks = attention_tracker(blink_stream, iris_threshold_coords)
