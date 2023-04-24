@@ -44,6 +44,10 @@ def attention_tracker(input_stream, iris_threshold):
     minute_average = [12, 12, 12]  # loaded with sample data
     skip = 0
     iris_data = [0, 0]
+    off_screen_count = 0
+    mouth_open = False
+    count = 0
+
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
             while True:
@@ -133,7 +137,7 @@ def attention_tracker(input_stream, iris_threshold):
                     cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
                     cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
                     cvzone.putTextRect(frame, "Blink Count : " + str(blink_counter), (50, 100))
-                    cvzone.putTextRect(frame, "Times Looked Off Screen : 0", (50, 150))
+                    cvzone.putTextRect(frame, "Times Looked Off Screen : " + str(off_screen_count), (50, 150))
                     cv.imshow('img', frame)
 
                 ''' Blink Feature '''
@@ -183,13 +187,31 @@ def attention_tracker(input_stream, iris_threshold):
                     up_iris_threshold = iris_threshold[2]
                     down_iris_threshold = iris_threshold[3]
 
+                    # Check If User is looking left or right using threshold values.
+                    print(distance_left_center)
                     if distance_left_center > left_iris_threshold:
-                        print("Looking Left")
-                    elif distance_left_center < right_iris_threshold:
                         print("Looking Right")
-                    else:
-                        print("Looking Central")
+                    elif distance_left_center < right_iris_threshold:
+                        print("Looking Left")
 
+                    # Check If User is looking off-screen using threshold values
+                    if distance_left_center < left_iris_threshold - 3 or distance_left_center > right_iris_threshold + 3:
+                        print("Looking Off Screen")
+                        off_screen_count += 1
+
+                    # Check If User is looking up or down using threshold values.
+                    if distance_lower_from_center > up_iris_threshold:
+                        print("Looking Up")
+                    elif distance_lower_from_center < down_iris_threshold:
+                        print("Looking Down")
+
+                        ''' Yawn Detection '''
+
+                    if ratio_average < 35 and mouth_open:
+                        count += 1
+                        if count > 5:
+                            print("Yawn Detected")
+                            mouth_open = False
 
                     if cv.waitKey(25) & 0xFF == ord('q'):
                         input_stream.release()
