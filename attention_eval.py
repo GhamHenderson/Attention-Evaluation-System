@@ -41,7 +41,7 @@ def attention_tracker(input_stream, iris_threshold):
     threshold = 30
     ratio_average = 0
     counter = 0
-    minute_average = [12, 12, 12]  # loaded with sample data
+    minute_average = [13, 12, 14, 12, 13, 13, 11, 11, 12, 13, 13, 13, 12, 13, 12]  # loaded with sample data
     skip = 0
     iris_data = [0, 0]
     off_screen_count = 0
@@ -52,9 +52,15 @@ def attention_tracker(input_stream, iris_threshold):
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
             while True:
+                try:
+                    # read a frame from the input stream
+                    img, frame = input_stream.read()
+                    # If the frame is empty, break the loop
+                    if frame is None or frame.size == 0:
+                        break
+                except:
+                    break
 
-                # read a frame from the input stream
-                img, frame = input_stream.read()
                 root = tk.Tk()
                 root.withdraw()
                 screen_width = root.winfo_screenwidth()
@@ -225,15 +231,12 @@ def attention_tracker(input_stream, iris_threshold):
                 # reset boolean once mouth has closed and yawn has ended
                 if mouth_ratio < 20:
                     mouth_open = False
-
                 if cv.waitKey(25) & 0xFF == ord('q'):
                     try:
-                        input_stream.release()
-                        cv.destroyAllWindows()
-                        return iris_data, minute_average
+                        break
                     except Exception as ex:
-                        print("error : " + str(ex))
-                        return iris_data, minute_average
+                        break
+        return iris_data, minute_average, yawn_total
 
 
 '''

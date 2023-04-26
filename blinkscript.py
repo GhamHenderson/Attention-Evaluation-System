@@ -110,6 +110,7 @@ def blink_counter(cap):
 
         # Wait for a short period and check if the user has pressed 'q' to quit
         if cv.waitKey(25) & 0xFF == ord('q'):
-            # save_data_to_textfile(minute_average)
-            cv.destroyAllWindows()
-            return minute_average
+            time.sleep(1)
+            break
+
+    return minute_average
