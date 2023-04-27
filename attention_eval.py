@@ -143,9 +143,12 @@ def attention_tracker(input_stream, iris_threshold):
 
                     cv.line(frame, center_right_iris, right_upper_eye, (0, 200, 0), 3)
                     cv.line(frame, center_right_iris, right_lower_eye, (0, 200, 0), 3)
-                    cvzone.putTextRect(frame, "Blink Count : " + str(blink_counter), (50, 100))
-                    cvzone.putTextRect(frame, "Times Looked Off Screen : " + str(off_screen_count), (50, 150))
-                    cvzone.putTextRect(frame, "Yawns Detected : " + str(yawn_total), (50, 200))
+                    cvzone.putTextRect(frame, "Blink Count : " + str(blink_counter), (50, 50))
+                    cvzone.putTextRect(frame, "Times Looked Off Screen : " + str(off_screen_count), (50, 100))
+                    cvzone.putTextRect(frame, "Yawns Detected : " + str(yawn_total), (50, 150))
+                    cv.putText(frame, "Press Q to end session", (frame.shape[1] - 400, frame.shape[0] - 50),
+                                cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv.LINE_AA)
+
                     cv.imshow('img', frame)
 
                 ''' Blink Feature '''

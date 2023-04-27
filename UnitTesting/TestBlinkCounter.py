@@ -1,8 +1,6 @@
 import unittest
-
-import unittest
 import cv2
-from blinkscript import blink_counter
+from Old_Scripts.blinkscript import blink_counter
 
 cap = cv2.VideoCapture('../media/WIN_20230215_15_08_52_Pro.mp4')
 
