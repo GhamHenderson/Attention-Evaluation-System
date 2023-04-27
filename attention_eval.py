@@ -38,7 +38,8 @@ def attention_tracker(input_stream, iris_threshold):
     right_iris_landmarks = [469, 470, 471, 472]
     ratioList = []
     i = 0
-    threshold = 30
+    # Initialize variables
+    off_screen_count = 0
     ratio_average = 0
     counter = 0
     minute_average = [13, 12, 14, 12, 13, 13, 11, 11, 12, 13, 13, 13, 12, 13, 12]  # loaded with sample data
@@ -46,8 +47,10 @@ def attention_tracker(input_stream, iris_threshold):
     iris_data = [0, 0]
     off_screen_count = 0
     mouth_open = False
+    eye_closed = False
     yawn_total = 0
     count = 0
+    looking_on_screen = True
 
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
@@ -147,7 +150,7 @@ def attention_tracker(input_stream, iris_threshold):
                     cvzone.putTextRect(frame, "Times Looked Off Screen : " + str(off_screen_count), (50, 100))
                     cvzone.putTextRect(frame, "Yawns Detected : " + str(yawn_total), (50, 150))
                     cv.putText(frame, "Press Q to end session", (frame.shape[1] - 400, frame.shape[0] - 50),
-                                cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv.LINE_AA)
+                               cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv.LINE_AA)
 
                     cv.imshow('img', frame)
 
@@ -163,7 +166,6 @@ def attention_tracker(input_stream, iris_threshold):
                         time.sleep(1)
                     else:
                         time.sleep(1)
-
                     skip += 1
 
                 distance_top_bottom, _ = detector.findDistance(left_upper_eye, left_lower_eye)
@@ -180,14 +182,15 @@ def attention_tracker(input_stream, iris_threshold):
                     ratioList.pop(0)
                     ratio_average = sum(ratioList) / len(ratioList)
 
+                print("ratio : " + str(ratio_average))
                 # If the eye aspect ratio falls below a threshold, increment the blink counter
-                if ratio_average < 35 and counter == 0:
-                    blink_counter += 1
-                    counter = 1
-                if counter != 0:
-                    counter += 1
-                    if counter > 10:  # After 10 frames
-                        counter = 0
+                if ratio_average < 25:
+                    if not eye_closed:
+                        blink_counter += 1
+                        eye_closed = True
+
+                if ratio_average > 25:
+                    eye_closed = False
 
                 ''' Iris Feature '''
 
@@ -205,8 +208,11 @@ def attention_tracker(input_stream, iris_threshold):
 
                 # Check If User is looking off-screen using threshold values
                 if distance_left_center < left_iris_threshold - 3 or distance_left_center > right_iris_threshold + 3:
-                    print("Looking Off Screen")
-                    off_screen_count += 1
+                    if looking_on_screen:
+                        off_screen_count += 1
+                        looking_on_screen = False
+                else:
+                    looking_on_screen = True
 
                 # Check If User is looking up or down using threshold values.
                 if distance_lower_from_center > up_iris_threshold:
