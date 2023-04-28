@@ -48,3 +48,4 @@ def attention_score(iris, blinks, yawn_total, name):
 
     # Show the chart
     plt.show()
+

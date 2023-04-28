@@ -1,4 +1,16 @@
+import re
 import tkinter as tk
+
+
+def is_valid_name(name):
+    # Define a regular expression pattern for a valid name
+    pattern = r'^[a-zA-Z ]{0,3}[a-zA-Z]{3,12}[a-zA-Z ]{0,3}$'
+
+    # Check if the input matches the pattern
+    if re.match(pattern, name):
+        return True
+    else:
+        return False
 
 
 def get_username():
@@ -46,5 +58,5 @@ def get_username():
 
     # Start the main event loop and wait for the window to close
     root.wait_window(root)
-
+    valid = is_valid_name(user_name)
     return user_name

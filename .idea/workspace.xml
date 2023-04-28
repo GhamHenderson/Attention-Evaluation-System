@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="85941126-63e2-43ee-a5c8-9b3901b83064" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/attention_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/attention_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Attention_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/Attention_score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/intro.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/intro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnitTesting/TestBlinkCounter.py" beforeDir="false" afterPath="$PROJECT_DIR$/UnitTesting/TestBlinkCounter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Unit Test" />
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -59,51 +61,7 @@
       <recent name="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI\GUI" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="attention_eval" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="KerasLoadModel" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/attention_eval.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="blinkscript" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="KerasLoadModel" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\Graha\OneDrive\Documents\GitHub\AttentionAI\Old_Scripts\blinkscript.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python tests.Python tests for TestAttentionTracker.TestAttentionTracker">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="KerasLoadModel" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -126,7 +84,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for TestBlinkCounter.TestBlinkCounter.test_ensure_returns_valid_int" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for TestAttentionTracker.TestAttentionTracker" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="KerasLoadModel" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -137,11 +95,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;TestBlinkCounter.TestBlinkCounter.test_ensure_returns_valid_int&quot;" />
+      <option name="_new_target" value="&quot;TestAttentionTracker.TestAttentionTracker&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in TestBlinkCounter.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for TestAttentionTracker.TestAttentionTracker.test_attention_score" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="KerasLoadModel" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -152,17 +110,47 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/UnitTesting/TestBlinkCounter.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;TestAttentionTracker.TestAttentionTracker.test_attention_score&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for TestAttentionTracker.TestAttentionTracker.test_blink_counter" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="KerasLoadModel" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/UnitTesting" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;TestAttentionTracker.TestAttentionTracker.test_blink_counter&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for TestAttentionTracker.TestAttentionTracker.test_show_plot" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="KerasLoadModel" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/UnitTesting" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;TestAttentionTracker.TestAttentionTracker.test_show_plot&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for TestAttentionTracker.TestAttentionTracker" />
+        <item itemvalue="Python tests.Python tests for TestAttentionTracker.TestAttentionTracker.test_attention_score" />
+        <item itemvalue="Python tests.Python tests for TestAttentionTracker.TestAttentionTracker.test_blink_counter" />
+        <item itemvalue="Python tests.Python tests for TestAttentionTracker.TestAttentionTracker.test_show_plot" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.attention_eval" />
-        <item itemvalue="Python.blinkscript" />
-        <item itemvalue="Python tests.Python tests in TestBlinkCounter.py" />
-        <item itemvalue="Python tests.Python tests for TestBlinkCounter.TestBlinkCounter.test_ensure_returns_valid_int" />
       </list>
     </recent_temporary>
   </component>
@@ -214,7 +202,8 @@
       <workItem from="1682520517980" duration="1979000" />
       <workItem from="1682533979447" duration="4873000" />
       <workItem from="1682594796854" duration="2907000" />
-      <workItem from="1682612755578" duration="2544000" />
+      <workItem from="1682612755578" duration="3150000" />
+      <workItem from="1682695097270" duration="3876000" />
     </task>
     <servers />
   </component>
@@ -234,8 +223,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AttentionAI$blinkscript.coverage" NAME="blinkscript Coverage Results" MODIFIED="1681991410254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1682615167176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AttentionAI$.coverage" NAME=" Coverage Results" MODIFIED="1680612596747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/UnitTesting" />
+    <SUITE FILE_PATH="coverage/AttentionAI$main.coverage" NAME="main Coverage Results" MODIFIED="1682700451313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AttentionAI$.coverage" NAME=" Coverage Results" MODIFIED="1682700809295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/UnitTesting" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation__1_.coverage" NAME="iris_position_estimation (1) Coverage Results" MODIFIED="1680260671112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$attention_eval.coverage" NAME="attention_eval Coverage Results" MODIFIED="1682596626715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AttentionAI$iris_position_estimation.coverage" NAME="iris_position_estimation Coverage Results" MODIFIED="1680531909925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
