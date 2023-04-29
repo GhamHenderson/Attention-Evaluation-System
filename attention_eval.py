@@ -38,11 +38,15 @@ def attention_tracker(input_stream, iris_threshold):
     right_iris_landmarks = [469, 470, 471, 472]
     ratioList = []
     i = 0
+
     # Initialize variables
     off_screen_count = 0
     ratio_average = 0
     counter = 0
-    minute_average = [13, 12, 14, 12, 13, 13, 11, 11, 12, 13, 13, 13, 12, 13, 12]  # loaded with sample data
+    minute_average = [13, 12, 14, 12, 13, 13, 11, 11, 12, 13]  # loaded with sample data
+    yawn_average = [0, 0, 0, 0, 0, 1, 1, 0, 0, 0]
+    off_screen_average = [1, 0, 1, 2, 0, 0, 3, 4, 2, 0]
+
     skip = 0
     iris_data = [0, 0]
     off_screen_count = 0
@@ -51,6 +55,7 @@ def attention_tracker(input_stream, iris_threshold):
     yawn_total = 0
     count = 0
     looking_on_screen = True
+    total_blinks = 0
 
     while True:
         with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, ) as face_mesh:
@@ -156,18 +161,6 @@ def attention_tracker(input_stream, iris_threshold):
 
                 ''' Blink Feature '''
 
-                # Every Minute Take total blinks and add to  array containing total.
-                timer = datetime.now().second
-                # Timer To count blinks every 60 seconds, exclude first minute for accuracy reasons
-                if timer == 59:
-                    if skip != 0:
-                        minute_average.append(blink_counter)
-                        blink_counter = 0
-                        time.sleep(1)
-                    else:
-                        time.sleep(1)
-                    skip += 1
-
                 distance_top_bottom, _ = detector.findDistance(left_upper_eye, left_lower_eye)
                 distance_hor, _ = detector.findDistance(left_eye_left_side, left_eye_right_side)
 
@@ -240,12 +233,32 @@ def attention_tracker(input_stream, iris_threshold):
                 # reset boolean once mouth has closed and yawn has ended
                 if mouth_ratio < 20:
                     mouth_open = False
+
+                    # Every Minute Take total blinks and add to  array containing total.
+                    timer = datetime.now().second
+                    # Timer To count blinks every 60 seconds, exclude first minute for accuracy reasons
+                    if timer == 59:
+                        if skip != 0:
+                            minute_average.append(blink_counter)
+                            blink_counter = 0
+
+                            yawn_average.append(yawn_total)
+                            yawn_total = 0
+
+                            off_screen_average.append(off_screen_count)
+                            off_screen_count = 0
+
+                            time.sleep(1)
+                        else:  # skip the first minute for accuracy reasons
+                            time.sleep(1)
+                        skip += 1
+
                 if cv.waitKey(25) & 0xFF == ord('q'):
                     try:
                         break
                     except Exception as ex:
                         break
-        return iris_data, minute_average, yawn_total
+        return iris_data, minute_average, yawn_average, off_screen_average
 
 
 '''
