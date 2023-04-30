@@ -31,22 +31,20 @@ def attention_tracker(input_stream, iris_threshold):
     mp_face_mesh = mp.solutions.face_mesh
     detector = FaceMeshDetector(maxFaces=1)
 
+    # Initialise Variables
     left_eye_landmarks = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]
     right_eye_landmarks = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]
     blink_counter: int = 0
     left_iris_landmarks = [474, 475, 476, 477]
     right_iris_landmarks = [469, 470, 471, 472]
-    ratioList = []
+    ratio_list = []
     i = 0
-
-    # Initialize variables
     off_screen_count = 0
     ratio_average = 0
     counter = 0
-    minute_average = [13, 12, 14, 12, 13, 13, 11, 11, 12, 13]  # loaded with sample data
-    yawn_average = [0, 0, 0, 0, 0, 1, 1, 0, 0, 0]
+    minute_average = [13, 12, 14, 12, 13, 13, 11, 10, 12, 13]  # loaded with sample data
+    yawn_average = [0, 0, 0, 0, 0, 0, 0, 2, 1, 0]
     off_screen_average = [1, 0, 1, 2, 0, 0, 3, 4, 2, 0]
-
     skip = 0
     iris_data = [0, 0]
     off_screen_count = 0
@@ -170,10 +168,10 @@ def attention_tracker(input_stream, iris_threshold):
                 ratio = distance_top_bottom / distance_hor * 100
 
                 # Keep track of the last few eye aspect ratios and calculate their average
-                ratioList.append(ratio)
-                if len(ratioList) > 5:
-                    ratioList.pop(0)
-                    ratio_average = sum(ratioList) / len(ratioList)
+                ratio_list.append(ratio)
+                if len(ratio_list) > 5:
+                    ratio_list.pop(0)
+                    ratio_average = sum(ratio_list) / len(ratio_list)
 
                 print("ratio : " + str(ratio_average))
                 # If the eye aspect ratio falls below a threshold, increment the blink counter
