@@ -1,3 +1,4 @@
+import os
 import time
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -52,7 +53,18 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     # Add a legend
     plt.legend()
 
-    filename = now.strftime("reports/average_info_%m-%d_%H.png")
+    if name:
+        path = now.strftime("reports/" + name + "_%m-%d_%H/")
+        filename = now.strftime("reports/" + name + "_%m-%d_%H/total_yawns_vs_blinks_%m-%d_%H.png")
+
+        if not os.path.isdir(path):
+            os.makedirs(path)
+    else:
+        path = now.strftime("reports/unspecified_name_%m-%d_%H/")
+        filename = now.strftime("reports/unspecified_name_%m-%d_%H/total_yawns_vs_blinks_%m-%d_%H.png")
+        if not os.path.isdir(path):
+            os.makedirs(path)
+
     plt.savefig(filename, dpi=100)
     # Show the chart
     plt.show()
@@ -68,7 +80,10 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     plt.xlabel("Categories")
     plt.ylabel("Count")
 
-    filename = now.strftime("reports/yawns_blinks_%m-%d_%H.png")
+    if name:
+        filename = now.strftime("reports/" + name + "_%m-%d_%H/yawns_blinks_info_%m-%d_%H.png")
+    else:
+        filename = now.strftime("reports/unspecified_name_%m-%d_%H/yawns_blinks_info_%m-%d_%H.png")
     plt.savefig(filename, dpi=100)
     # Show the chart
     plt.show()
@@ -92,9 +107,39 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     ax.set_ylabel('Value')
 
     now = datetime.now()
-    filename = now.strftime("reports/summary_%m-%d_%H.png")
+    if name:
+        filename = now.strftime("reports/" + name + "_%m-%d_%H/summary_%m-%d_%H.png")
+    else:
+        filename = now.strftime("reports/unspecified_name_%m-%d_%H/summary_%m-%d_%H.png")
     plt.savefig(filename, dpi=100)
     plt.show()
+
+    # Get current date and time
+    now = datetime.now()
+
+    # Create filename using current date and time
+    if name:
+        filename = now.strftime("reports/" + name + "_%m-%d_%H/statistics_%m-%d_%H.txt")
+    else:
+        filename = now.strftime("reports/unspecified_name_%m-%d_%H/statistics_%m-%d_%H.txt")
+
+    import json
+    date_time_of_session = datetime.now()
+
+    # Create a dictionary with the data
+    data = {
+        "Time / Date of Session" : date_time_of_session.isoformat(),
+        "Average Blinks": average_blinks,
+        "Total Blinks": total_blinks,
+        "Average Yawns": average_yawns,
+        "Total Yawns": total_yawns,
+        "Average Off Screen Glances": average_offscreen,
+        "Total Off Screen Glances": total_offscreen
+    }
+
+    # Use filename to create new file
+    with open(filename, 'w') as f:
+        json.dump(data, f)
 
     import tkinter as tk
 
@@ -108,11 +153,11 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     text_frame = tk.Frame(window, padx=10, pady=10, bd=1, relief="solid")
     text_frame.pack(side="top", fill="both", expand=True)
 
-    # Add a label with some Lorem Ipsum text
+    # Add a label with some info on summary
     text = "Thank you for Using The Attention Evaluation System. \n" \
            "Please take note that the score is an estimated value based on physical traits. \n" \
            "Results are based on estimates therefore it is not 100% accurate. \n" \
-           "Check Score Below and In the Reports Folder for more detailed information."
+           "Check Score Below and In the /Reports Folder for more detailed information."
 
     text_label = tk.Label(text_frame, text=text, justify="left", wraplength=500, font=("Arial", 10))
     text_label.pack(expand=True)
