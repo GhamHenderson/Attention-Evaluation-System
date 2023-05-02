@@ -42,7 +42,7 @@ def attention_tracker(input_stream, iris_threshold):
     off_screen_count = 0
     ratio_average = 0
     counter = 0
-    minute_average = [13, 12, 14, 12, 13, 13, 11, 10, 12, 13]  # loaded with sample data
+    minute_average = [15, 14, 16, 14, 15, 15, 20, 21, 18, 17]  # loaded with sample data
     yawn_average = [0, 0, 0, 0, 0, 0, 0, 2, 1, 0]
     off_screen_average = [1, 0, 1, 2, 0, 0, 3, 4, 2, 0]
     skip = 0
@@ -173,7 +173,7 @@ def attention_tracker(input_stream, iris_threshold):
                     ratio_list.pop(0)
                     ratio_average = sum(ratio_list) / len(ratio_list)
 
-                print("ratio : " + str(ratio_average))
+                # print("ratio : " + str(ratio_average))
                 # If the eye aspect ratio falls below a threshold, increment the blink counter
                 if ratio_average < 25:
                     if not eye_closed:
@@ -192,13 +192,13 @@ def attention_tracker(input_stream, iris_threshold):
 
                 # Check If User is looking left or right using threshold values.
                 print(distance_left_center)
-                if distance_left_center > left_iris_threshold:
-                    print("Looking Right")
-                elif distance_left_center < right_iris_threshold:
-                    print("Looking Left")
+                # if distance_left_center > left_iris_threshold:
+                #     print("Looking Right")
+                # elif distance_left_center < right_iris_threshold:
+                #     print("Looking Left")
 
                 # Check If User is looking off-screen using threshold values
-                if distance_left_center < left_iris_threshold - 3 or distance_left_center > right_iris_threshold + 3:
+                if distance_left_center < left_iris_threshold - 5 or distance_left_center > right_iris_threshold + 5:
                     if looking_on_screen:
                         off_screen_count += 1
                         looking_on_screen = False
@@ -206,10 +206,10 @@ def attention_tracker(input_stream, iris_threshold):
                     looking_on_screen = True
 
                 # Check If User is looking up or down using threshold values.
-                if distance_lower_from_center > up_iris_threshold:
-                    print("Looking Up")
-                elif distance_lower_from_center < down_iris_threshold:
-                    print("Looking Down")
+                # if distance_lower_from_center > up_iris_threshold:
+                #     print("Looking Up")
+                # elif distance_lower_from_center < down_iris_threshold:
+                #     print("Looking Down")
 
                 ''' Yawn Detection '''
 

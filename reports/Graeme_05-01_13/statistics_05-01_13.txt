@@ -1,1 +1,0 @@
-{"Time / Date of Session": "2023-05-01T13:33:54.977373", "Average Blinks": 12.3, "Total Blinks": 123, "Average Yawns": 0.3, "Total Yawns": 3, "Average Off Screen Glances": 1.3, "Total Off Screen Glances": 13}

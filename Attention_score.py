@@ -23,7 +23,28 @@ def attention_score(iris, blinks, yawns, off_screen, name):
         total_offscreen = o + total_offscreen
     average_offscreen = total_offscreen / len(off_screen)
 
+    session_length = len(blinks)
+    yawn_target = 1 * (10 / session_length)
+    off_screen_target = 1 * (10 / session_length)
+
+    blinks_closeness = (1 - (abs(average_blinks - 15) / 15)) * 100
+    yawn_closeness = (1 - (abs(average_yawns - yawn_target) / yawn_target)) * 100
+    average_offscreen = (1 - (abs(average_offscreen - off_screen_target) / off_screen_target)) * 100
+
+    # Assign weights to each value
+    weight_blinks = 0.5
+    weight_yawns = 0.3
+    weight_offscreen = 0.2
+
+    # Calculate the overall percentage
+    overall_percentage = (blinks_closeness * weight_blinks +
+                          yawn_closeness * weight_yawns +
+                          average_offscreen * weight_offscreen)
+
+    attention_rating = str(int(overall_percentage)) + " / 100"
+
     print("\n")
+
     if name != "":
         print("User : " + str(name))
     else:
@@ -128,7 +149,8 @@ def attention_score(iris, blinks, yawns, off_screen, name):
 
     # Create a dictionary with the data
     data = {
-        "Time / Date of Session" : date_time_of_session.isoformat(),
+        "Time / Date of Session": date_time_of_session.isoformat(),
+        "Attention Score": overall_percentage,
         "Average Blinks": average_blinks,
         "Total Blinks": total_blinks,
         "Average Yawns": average_yawns,
@@ -147,7 +169,7 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     window = tk.Tk()
 
     # Set the size of the window
-    window.geometry("600x300")
+    window.geometry("800x600")
 
     # Create a frame for the text label
     text_frame = tk.Frame(window, padx=10, pady=10, bd=1, relief="solid")
@@ -175,8 +197,8 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     total_blinks_label = tk.Label(stats_frame, text="Total Blinks in Session: " + str(total_blinks))
     yawns_label = tk.Label(stats_frame, text="Average Yawns: " + str(average_yawns))
     total_yawns_label = tk.Label(stats_frame, text="Total Yawns in session: " + str(total_yawns))
-    offscreen_label = tk.Label(stats_frame, text="Average OffScreen: " + str(average_offscreen))
-    total_offscreen_label = tk.Label(stats_frame, text="Total OffScreen in session: " + str(total_offscreen))
+    offscreen_label = tk.Label(stats_frame, text="Average Off Screen: " + str(average_offscreen))
+    total_offscreen_label = tk.Label(stats_frame, text="Total Off Screen in session: " + str(total_offscreen))
 
     # Pack the labels into the statistics frame
     blinks_label.pack()
@@ -191,11 +213,11 @@ def attention_score(iris, blinks, yawns, off_screen, name):
     score_frame.pack(side="bottom", fill="x", padx=10, pady=10)
 
     # Add a label for the attention score title
-    score_title_label = tk.Label(score_frame, text="Attention Score", font=("Arial", 16))
+    score_title_label = tk.Label(score_frame, text="Your Attention Score:", font=("Arial", 16))
     score_title_label.pack(side="top", pady=10)
 
     # Add a label for the attention score
-    attention_score_label = tk.Label(score_frame, text="86 / 100", font=("Arial", 24))
+    attention_score_label = tk.Label(score_frame, text=attention_rating, font=("Arial", 24))
     attention_score_label.pack(expand=True)
 
     # Start the Tkinter event loop
